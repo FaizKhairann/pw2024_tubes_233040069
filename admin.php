@@ -1,15 +1,3 @@
-<!-- Koneksi ke DB & Pilih Database -->
-<?php
-require './function/functions.php';
-$games = query("SELECT * FROM games");
-
-// ketika tombol cari diklik
-if (isset($_POST['cari'])) {
-  $games = cari($_POST['keyword']);
-}
-
-?>
-
 <!doctype html>
 <html lang="en">
 
@@ -37,7 +25,6 @@ if (isset($_POST['cari'])) {
     /* Navbar */
 
     .navbar-brand {
-      color: #EAC50D;
       font-family: "Poppins", sans-serif;
       font-weight: 700;
       font-style: normal;
@@ -50,21 +37,11 @@ if (isset($_POST['cari'])) {
     }
 
     .halaman1 {
-      height: 80px;
-    }
-
-    #card {
-      font-family: "Poppins", sans-serif;
-      font-weight: 500;
-      font-style: normal;
-    }
-
-    .c {
-      background-color: #232e35;
+      height: 100px;
     }
 
     .card {
-      height: 100%;
+      background-color: #232e35;
     }
   </style>
 </head>
@@ -74,22 +51,22 @@ if (isset($_POST['cari'])) {
   <!-- navbar start -->
   <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="navbar">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">RaccoonG.</a>
+      <a class="navbar-brand" href="#">RaccooonG.</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#card">Home</a>
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Link</a>
           </li>
         </ul>
-        <form action="" method="POST" class="d-flex" role="search">
-          <input class="form-control me-2" type="text" name="keyword" placeholder="Search" aria-label="Search">
-          <button type="submit" name="cari" class="btn btn-outline-warning" autocomplete="off">Search</button>
+        <form class="d-flex" role="search">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button type="button" class="btn btn-outline-warning">Search</button>
         </form>
       </div>
     </div>
@@ -99,43 +76,23 @@ if (isset($_POST['cari'])) {
 
   </section>
   <!-- Daftar Game Start -->
-  <section id="card" class="c">
-    <div class="container text-center my-5">
-      <div class="d-flex justify-content-start mb-4">
-        <a href="./admin/Tambah.php" class="btn btn-primary">Tambah Data</a>
-      </div>
-
-      <?php
-
-      ?>
-
+  <section class="card" id="">
+    <div class="container text-center">
       <div class="row">
-
-        <?php if (empty($games)) : ?>
-          <div class="card border-danger mb-3" style="max-width: 24rem;">
-            <div class="card-body text-danger">
-              <h5 class="card-title">Data tidak ditemukan!</h5>
+        <div class="col-4">
+          <div class="card" style="width: 18rem;">
+            <img src="./assets/image/counter-strike2.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <button type="button" class="btn btn-outline-warning">Ubah</button>
+              <button type="button" class="btn btn-outline-danger">Hapus</button>
             </div>
-          <?php endif ?>
-
-          <?php $i = 1;
-          foreach ($games as $g) : ?>
-            <div class="col-md-3 mb-4 d-flex align-items-stretch">
-              <div class="card" style="width: 18rem;">
-                <img src="./assets/image/<?= $g['gambar']; ?>" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title"><?= $i++ ?>. <?= $g['nama_game']; ?></h5>
-                  <p class="card-text"><?= $g['deskripsi']; ?></p>
-                </div>
-
-                <div class="card-body">
-                  <a href="admin/Detail.php?id=<?= $g['id_game']; ?>" type="button" class="btn btn-outline-primary">Detail</a>
-                </div>
-              </div>
-            </div>
-          <?php endforeach; ?>
           </div>
+        </div>
+
       </div>
+    </div>
 
   </section>
 
