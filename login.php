@@ -1,19 +1,16 @@
 <?php
 session_start();
-$message = '';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $username = $_POST['username'];
-  $password = $_POST['password'];
+if (isset($_SESSION['login'])) {
+  header("Location: ./index.php");
+  exit;
+}
 
-  // Proses autentikasi sederhana, ganti dengan proses yang lebih aman.
-  if ($username == "admin" && $password == "password") {
-    $_SESSION['username'] = $username;
-    header("Location: index.php");
-    exit();
-  } else {
-    $message = "Invalid username or password!";
-  }
+require './function/functions.php';
+
+// ketika tombol login ditekan
+if (isset($_POST['login'])) {
+  $login = login($_POST);
 }
 ?>
 
@@ -23,35 +20,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <title>Login</title>
+  <title>Login Form</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+  <style>
+    .login-container {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+    }
+
+    .login-form {
+      width: 100%;
+      max-width: 400px;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+  </style>
 </head>
 
 <body>
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-4">
-        <h2 class="text-center mt-5">Login</h2>
-        <?php if ($message) : ?>
-          <div class="alert alert-danger">
-            <?php echo $message; ?>
-          </div>
-        <?php endif; ?>
-        <form action="login.php" method="post">
-          <div class="mb-3">
-            <label for="username" class="form-label">Username</label>
-            <input type="text" class="form-control" id="username" name="username" required>
-          </div>
-          <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" id="password" name="password" required>
-          </div>
-          <button type="submit" class="btn btn-primary w-100">Login</button>
-        </form>
-      </div>
+  <div class="container-fluid login-container">
+    <div class="login-form bg-light">
+      <h2 class="text-center mb-4">Login</h2>
+      <?php if (isset($login['error'])) : ?>
+        <p style="color: red;"><?= $login['pesan']; ?></p>
+      <?php endif; ?>
+      <form action="" method="POST">
+        <div class="mb-3">
+          <label class="form-label">Username</label>
+          <input type="text" name="username" class="form-control" autofocus autocomplete="off" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Password</label>
+          <input type="password" name="password" class="form-control" required>
+        </div>
+        <button type="submit" name="login" class="btn btn-primary w-100">Login</button>
+      </form>
     </div>
   </div>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
 </body>
 
 </html>

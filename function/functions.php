@@ -33,10 +33,10 @@ function upload()
 
   // ketika tidak ada gambar yang dipilih
   if ($error == 4) {
-    echo "<script>
-           alert('pilih gambar terlebih dahulu') 
-        </script>";
-    return false;
+    // echo "<script>
+    //        alert('pilih gambar terlebih dahulu') 
+    //     </script>";
+    return 'nonphoto.jpg';
   }
 
   // cek ekstensi file
@@ -111,6 +111,13 @@ function tambah($data)
 function hapus($id)
 {
   $conn = koneksi();
+
+  // menghapus gambar di folder assets/image
+  $g = query("SELECT * FROM games WHERE id_game = $id");
+  if ($g['gambar'] != 'nonphoto.jpg') {
+    unlink('image/' . $g['gambar']);
+  }
+
   mysqli_query($conn, "DELETE FROM games WHERE id_game = $id") or die(mysqli_error($conn));
   return mysqli_affected_rows($conn);
 }
@@ -126,7 +133,16 @@ function ubah($data)
   $genre = htmlspecialchars($data['genre']);
   $tanggalrilis = htmlspecialchars($data['tanggal_rilis']);
   $developer = htmlspecialchars($data['developer']);
-  $gambar = htmlspecialchars($data['gambar']);
+  $gambar_lama = htmlspecialchars($data['gambar_lama']);
+
+  $gambar = upload();
+  if (!$gambar) {
+    return false;
+  }
+
+  if ($gambar == 'nonphoto.jpg') {
+    $gambar = $gambar_lama;
+  }
 
   $query = "UPDATE games SET
                 nama_game = '$nama',
@@ -161,4 +177,25 @@ function cari($keyword)
   }
 
   return $rows;
+}
+
+function login($data)
+{
+  $conn = koneksi();
+
+  $username = htmlspecialchars($data['username']);
+  $password = htmlspecialchars($data['password']);
+
+  if (query("SELECT * FROM users WHERE username = '$username' && password = '$password'")) {
+    // set session
+    $_SESSION['login'] = true;
+
+    header("Location: ./index.php");
+    exit;
+  } else {
+    return [
+      'error' => true,
+      'pesan' => 'Username / Password Salah!'
+    ];
+  }
 }

@@ -1,4 +1,11 @@
 <?php
+session_start();
+if (!isset($_SESSION['login'])) {
+  header("Location: ../login.php");
+  exit;
+}
+
+
 require '../function/functions.php';
 
 
@@ -37,6 +44,12 @@ if (isset($_POST['ubah'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <title>Ubah Data Games</title>
+  <style>
+    .nonphoto {
+      margin-top: 10px;
+      border-radius: 10px;
+    }
+  </style>
 </head>
 
 <body>
@@ -73,8 +86,10 @@ if (isset($_POST['ubah'])) {
       </div>
 
       <div class="mb-3">
+        <input type="hidden" name="gambar_lama" value="<?= $g['gambar']; ?>">
         <label for="jurusan" class="form-label">Gambar</label>
-        <input type="text" class="form-control" id="gambar" name="gambar" required value="<?= $g['gambar']; ?>">
+        <input type="file" class="form-control" id="gambar" name="gambar" class="gambar" onchange="previewImage()">
+        <img src="../assets/image/<?= $g['gambar']; ?>" width="120px" class="nonphoto img-preview">
       </div>
 
 
@@ -85,7 +100,7 @@ if (isset($_POST['ubah'])) {
   </div>
 
 
-
+  <script src="../JS/script.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 

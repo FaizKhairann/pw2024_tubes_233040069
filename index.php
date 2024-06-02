@@ -1,6 +1,14 @@
 <!-- Koneksi ke DB & Pilih Database -->
 <?php
+session_start();
+if (!isset($_SESSION['login'])) {
+  header("Location: ./login.php");
+  exit;
+}
+
+
 require './function/functions.php';
+
 $games = query("SELECT * FROM games");
 
 // ketika tombol cari diklik
@@ -10,7 +18,7 @@ if (isset($_POST['cari'])) {
 
 ?>
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -90,6 +98,7 @@ if (isset($_POST['cari'])) {
         <form action="" method="POST" class="d-flex" role="search">
           <input class="form-control me-2" type="text" name="keyword" placeholder="Search" aria-label="Search">
           <button type="submit" name="cari" class="btn btn-outline-warning" autocomplete="off">Search</button>
+          <a href="logout.php" class="btn btn-outline-danger ms-2">Logout</a>
         </form>
       </div>
     </div>
