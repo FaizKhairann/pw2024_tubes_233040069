@@ -1,7 +1,11 @@
 <?php
 function koneksi()
 {
-  return  mysqli_connect('localhost', 'root', '', 'pw2024_tubes_233040069');
+  $conn = mysqli_connect('localhost', 'root', '', 'pw2024_tubes_233040069');
+  if (!$conn) {
+    die("Koneksi gagal: " . mysqli_connect_error());
+  }
+  return $conn;
 }
 
 function query($query)
@@ -179,23 +183,88 @@ function cari($keyword)
   return $rows;
 }
 
+// Fungsi login
 function login($data)
 {
   $conn = koneksi();
 
-  $username = htmlspecialchars($data['username']);
-  $password = htmlspecialchars($data['password']);
+  $username = htmlspecialchars($data["username"]);
+  $password = htmlspecialchars($data["password"]);
 
-  if (query("SELECT * FROM users WHERE username = '$username' && password = '$password'")) {
-    // set session
-    $_SESSION['login'] = true;
+  // cek dulu username nya
+  if ($user = query("SELECT * FROM users WHERE username = '$username'")[0]) {
+    if (password_verify($password, $user['password'])) {
 
-    header("Location: ./index.php");
-    exit;
-  } else {
-    return [
-      'error' => true,
-      'pesan' => 'Username / Password Salah!'
-    ];
+      $_SESSION['login'] = true;
+      header("Location: ./index.php");
+      exit;
+    }
   }
+  return [
+    'error' => true,
+    'pesan' => 'Username / Password Salah!'
+  ];
+}
+
+// Fungsi register
+function register($data)
+{
+  $conn = koneksi();
+
+  $username = htmlspecialchars(strtolower($data['username']));
+  $password1 = mysqli_real_escape_string($conn, $data['password1']);
+  $password2 = mysqli_real_escape_string($conn, $data['password2']);
+
+  // jika username /  password kosong
+  if (empty($username) || empty($password1) || empty($password2)) {
+    echo "<script>
+            alert('Username / Password Tidak Boleh Kosong!');
+            document.location.href = '../register.php';
+          </script>";
+
+    return false;
+  }
+
+  // jika username sudah ada 
+  if (query("SELECT * FROM users WHERE username = '$username'  ")) {
+    echo "<script>
+            alert('Username Sudah Terdaftar!');
+            document.location.href = './register.php';
+          </script>";
+
+    return false;
+  }
+
+  // jika konfirmasi password tidak sesuai
+  if ($password1 !== $password2) {
+    echo "<script>
+            alert('Konfirmasi Tidak Sesuai!');
+            document.location.href = './register.php';
+          </script>";
+
+    return false;
+  }
+
+  // jika password < 5 digit
+  if (strlen($password1) < 5) {
+    echo "<script>
+            alert('Password Terlalu Pendek!');
+            document.location.href = './register.php';
+          </script>";
+
+    return false;
+  }
+
+  // jika username & password sudah sesuai 
+  // enkripsi password
+  $password_baru = password_hash($password1, PASSWORD_DEFAULT);
+  // insert ke tabel users
+
+  // jika username & password sudah sesuai
+  $password_baru = password_hash($password1, PASSWORD_DEFAULT);
+  // insert ke tabel user
+  $query = "INSERT INTO users VALUES
+            (null, '$username', '$password_baru')";
+  mysqli_query($conn, $query) or die(mysqli_error($conn));
+  return mysqli_affected_rows($conn);
 }

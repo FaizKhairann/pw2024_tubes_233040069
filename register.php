@@ -1,17 +1,18 @@
 <?php
-session_start();
-
-if (isset($_SESSION['login'])) {
-  header("Location: ./index.php");
-  exit;
-}
 
 require './function/functions.php';
 
-// ketika tombol login ditekan
-if (isset($_POST['login'])) {
-  $login = login($_POST);
+if (isset($_POST['register'])) {
+  if (register($_POST) > 0) {
+    echo "<script>
+            alert('User Baru Berhasil Ditambahkan, Silahkan Login!');
+            document.location.href = './login.php';
+          </script>";
+  } else {
+    echo 'User Gagal Ditambakan!';
+  }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -20,18 +21,11 @@ if (isset($_POST['login'])) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login Form</title>
+  <title>Register Form</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
   <style>
-    body {
-      background-image: url(assets/image/Background.jpg);
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-position: center;
-    }
-
-    .login-container {
+    .register-container {
       height: 100vh;
       display: flex;
       align-items: center;
@@ -39,7 +33,7 @@ if (isset($_POST['login'])) {
       padding: 15px;
     }
 
-    .login-form {
+    .register-form {
       width: 100%;
       max-width: 400px;
       padding: 15px;
@@ -50,12 +44,10 @@ if (isset($_POST['login'])) {
 </head>
 
 <body>
-  <div class="container-fluid login-container">
-    <div class="login-form bg-secondary text-white">
-      <h2 class="text-center mb-4">Login</h2>
-      <?php if (isset($login['error'])) : ?>
-        <p style="color: red;"><?= $login['pesan']; ?></p>
-      <?php endif; ?>
+  <div class="container-fluid register-container">
+    <div class="register-form bg-light">
+      <h2 class="text-center mb-4">Register</h2>
+
       <form action="" method="POST">
         <div class="mb-3">
           <label class="form-label">Username</label>
@@ -63,13 +55,14 @@ if (isset($_POST['login'])) {
         </div>
         <div class="mb-3">
           <label class="form-label">Password</label>
-          <input type="password" name="password" class="form-control" required>
+          <input type="password" name="password1" class="form-control" required>
         </div>
-        <button type="submit" name="login" class="btn btn-primary w-100">Login</button>
+        <div class="mb-3">
+          <label class="form-label">Confirm Password</label>
+          <input type="password" name="password2" class="form-control" required>
+        </div>
+        <button type="submit" name="register" class="btn btn-primary w-100">Register</button>
       </form>
-      <div class="mt-3 text-center">
-        <a href="register.php" class="btn btn-secondary w-100">Register</a>
-      </div>
     </div>
   </div>
 

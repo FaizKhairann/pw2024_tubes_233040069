@@ -96,8 +96,8 @@ if (isset($_POST['cari'])) {
           </li>
         </ul>
         <form action="" method="POST" class="d-flex" role="search">
-          <input class="form-control me-2" type="text" name="keyword" placeholder="Search" aria-label="Search">
-          <button type="submit" name="cari" class="btn btn-outline-warning" autocomplete="off">Search</button>
+          <input class="form-control me-2" type="text" name="keyword" placeholder="Search" aria-label="Search" autocomplete="off" class="keyword">
+          <button type="submit" name="cari" class="btn btn-outline-warning" autocomplete="off" class="tombol-cari">Search</button>
           <a href="logout.php" class="btn btn-outline-danger ms-2">Logout</a>
         </form>
       </div>
