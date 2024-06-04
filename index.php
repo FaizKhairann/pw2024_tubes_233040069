@@ -96,61 +96,65 @@ if (isset($_POST['cari'])) {
           </li>
         </ul>
         <form action="" method="POST" class="d-flex" role="search">
-          <input class="form-control me-2" type="text" name="keyword" placeholder="Search" aria-label="Search" autocomplete="off" class="keyword">
-          <button type="submit" name="cari" class="btn btn-outline-warning" autocomplete="off" class="tombol-cari">Search</button>
+          <input class="form-control me-2 keyword" type="text" name="keyword" placeholder="Search" aria-label="Search" autocomplete="off">
+          <button type="submit" name="cari" class="btn btn-outline-warning tombol-cari" autocomplete="off">Search</button>
           <a href="logout.php" class="btn btn-outline-danger ms-2">Logout</a>
         </form>
       </div>
     </div>
   </nav>
   <!-- navbar end -->
+
   <section class="halaman1">
 
   </section>
+
+
   <!-- Daftar Game Start -->
   <section id="card" class="c">
-    <div class="container text-center my-5">
-      <div class="d-flex justify-content-start mb-4">
-        <a href="./admin/Tambah.php" class="btn btn-primary">Tambah Data</a>
-      </div>
+    <div class="container1">
+      <div class="container text-center my-5">
+        <div class="d-flex justify-content-start mb-4">
+          <a href="./admin/Tambah.php" class="btn btn-primary">Tambah Data</a>
+        </div>
 
-      <?php
+        <?php
 
-      ?>
+        ?>
 
-      <div class="row">
+        <div class="row">
 
-        <?php if (empty($games)) : ?>
-          <div class="card border-danger mb-3" style="max-width: 24rem;">
-            <div class="card-body text-danger">
-              <h5 class="card-title">Data tidak ditemukan!</h5>
-            </div>
-          <?php endif ?>
+          <?php if (empty($games)) : ?>
+            <div class="card border-danger mb-3" style="max-width: 24rem;">
+              <div class="card-body text-danger">
+                <h5 class="card-title">Data tidak ditemukan!</h5>
+              </div>
+            <?php endif ?>
 
-          <?php $i = 1;
-          foreach ($games as $g) : ?>
-            <div class="col-md-3 mb-4 d-flex align-items-stretch">
-              <div class="card" style="width: 18rem;">
-                <img src="./assets/image/<?= $g['gambar']; ?>" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title"><?= $i++ ?>. <?= $g['nama_game']; ?></h5>
-                  <p class="card-text"><?= $g['deskripsi']; ?></p>
-                </div>
+            <?php $i = 1;
+            foreach ($games as $g) : ?>
+              <div class="col-md-3 mb-4 d-flex align-items-stretch">
+                <div class="card" style="width: 18rem;">
+                  <img src="./assets/image/<?= $g['gambar']; ?>" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title"><?= $i++ ?>. <?= $g['nama_game']; ?></h5>
+                    <p class="card-text"><?= $g['deskripsi']; ?></p>
+                  </div>
 
-                <div class="card-body">
-                  <a href="admin/Detail.php?id=<?= $g['id_game']; ?>" type="button" class="btn btn-outline-primary">Detail</a>
+                  <div class="card-body">
+                    <a href="admin/Detail.php?id=<?= $g['id_game']; ?>" type="button" class="btn btn-outline-primary">Detail</a>
+                  </div>
                 </div>
               </div>
+            <?php endforeach; ?>
             </div>
-          <?php endforeach; ?>
-          </div>
+        </div>
+
       </div>
-
+    </div>
   </section>
 
-  <section>
-
-  </section>
+  <script src="./JS/script.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 
