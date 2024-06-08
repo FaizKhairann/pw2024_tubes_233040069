@@ -57,7 +57,6 @@ if (isset($_POST['cari'])) {
       font-style: normal;
     }
 
-
     .halaman1 {
       height: 80px;
     }
@@ -74,12 +73,6 @@ if (isset($_POST['cari'])) {
 
     .card {
       height: 100%;
-    }
-
-    /* Gaya untuk kotak urutan */
-    .sort-container select,
-    .sort-container button {
-      border-radius: 7px;
     }
   </style>
 </head>
@@ -103,7 +96,7 @@ if (isset($_POST['cari'])) {
           </li>
         </ul>
         <form action="" method="POST" class="d-flex" role="search">
-          <input class="form-control me-2 keyword" type="text" name="keyword" placeholder="Search" aria-label="Search" autocomplete="off" autofocus>
+          <input class="form-control me-2 keyword" type="text" name="keyword" placeholder="Search" aria-label="Search" autocomplete="off">
           <button type="submit" name="cari" class="btn btn-outline-warning tombol-cari" autocomplete="off">Search</button>
           <a href="logout.php" class="btn btn-outline-danger ms-2">Logout</a>
         </form>
@@ -121,17 +114,7 @@ if (isset($_POST['cari'])) {
   <section id="card" class="c">
     <div class="container1">
       <div class="container text-center my-5">
-        <div class="d-flex justify-content-start mb-4">
-          <a href="./admin/Tambah.php" class="btn btn-primary">Tambah Data</a>
-        </div>
 
-        <div class="d-flex mt-2 mb-4 sort-container" style="width:40%;">
-          <select name="sort_option" style="margin-right: 5px;">
-            <option value="" class="text-center ">------urutkan------</option>
-            <option value="model_a-z">Nama A-Z</option>
-          </select>
-          <button class="btn btn-outline-light tombol-cari" type="submit" name="urutkan">urutkan</button>
-        </div>
 
         <?php
 
@@ -157,7 +140,7 @@ if (isset($_POST['cari'])) {
                   </div>
 
                   <div class="card-body">
-                    <a href="admin/Detail.php?id=<?= $g['id_game']; ?>" type="button" class="btn btn-outline-primary">Detail</a>
+                    <a href="admin/Detail user.php?id=<?= $g['id_game']; ?>" type="button" class="btn btn-outline-primary">Detail</a>
                   </div>
                 </div>
               </div>

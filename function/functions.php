@@ -196,7 +196,15 @@ function login($data)
     if (password_verify($password, $user['password'])) {
 
       $_SESSION['login'] = true;
-      header("Location: ./index.php");
+      $_SESSION['role'] = $user['role'];
+      $_SESSION['id'] = $user['user'];
+
+      // cek kondisi admin atau user
+      if ($user['role'] == 'admin') {
+        header('Location: ./index.php');
+      } else {
+        header('Location: ./user.php');
+      }
       exit;
     }
   }
@@ -255,6 +263,9 @@ function register($data)
     return false;
   }
 
+  // Get role from user
+  $role = 'user';
+
   // jika username & password sudah sesuai 
   // enkripsi password
   $password_baru = password_hash($password1, PASSWORD_DEFAULT);
@@ -263,8 +274,9 @@ function register($data)
   // jika username & password sudah sesuai
   $password_baru = password_hash($password1, PASSWORD_DEFAULT);
   // insert ke tabel user
-  $query = "INSERT INTO users VALUES
-            (null, '$username', '$password_baru')";
+  $query = "INSERT INTO users (username, password, role)
+                  VALUES
+            ('$username', '$password_baru', '$role')";
   mysqli_query($conn, $query) or die(mysqli_error($conn));
   return mysqli_affected_rows($conn);
 }
