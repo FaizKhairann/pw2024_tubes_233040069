@@ -16,6 +16,16 @@ if (isset($_POST['cari'])) {
   $games = cari($_POST['keyword']);
 }
 
+if (isset($_POST['sort_option'])) {
+  $sort_option = $_POST['sort_option'];
+  switch ($sort_option) {
+    case 'nama_game_a-z':
+      $games = query("SELECT * FROM games ORDER BY nama_game ASC");
+      break;
+  }
+} else {
+  $games = query("SELECT * FROM games");
+}
 ?>
 
 <!DOCTYPE html>
@@ -59,7 +69,7 @@ if (isset($_POST['cari'])) {
 
 
     .halaman1 {
-      height: 80px;
+      height: 20px;
     }
 
     #card {
@@ -98,9 +108,7 @@ if (isset($_POST['cari'])) {
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="#card">Home</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
+
         </ul>
         <form action="" method="POST" class="d-flex" role="search">
           <input class="form-control me-2 keyword" type="text" name="keyword" placeholder="Search" aria-label="Search" autocomplete="off" autofocus>
@@ -124,15 +132,15 @@ if (isset($_POST['cari'])) {
         <div class="d-flex justify-content-start mb-4">
           <a href="./admin/Tambah.php" class="btn btn-primary">Tambah Data</a>
         </div>
-
-        <div class="d-flex mt-2 mb-4 sort-container" style="width:40%;">
-          <select name="sort_option" style="margin-right: 5px;">
-            <option value="" class="text-center ">------urutkan------</option>
-            <option value="model_a-z">Nama A-Z</option>
-          </select>
-          <button class="btn btn-outline-light tombol-cari" type="submit" name="urutkan">urutkan</button>
-        </div>
-
+        <form action="" method="post">
+          <div class="d-flex mt-2 mb-4 sort-container" style="width:40%;">
+            <select name="sort_option" style="margin-right: 5px;">
+              <option value="" class="text-center ">------urutkan------</option>
+              <option value="nama_game_a-z">Nama A-Z</option>
+            </select>
+            <button class="btn btn-outline-light tombol-cari" type="submit" name="urutkan">urutkan</button>
+          </div>
+        </form>
         <?php
 
         ?>
