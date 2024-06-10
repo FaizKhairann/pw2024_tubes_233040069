@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['login'])) {
-  header("Location: ../login.php");
+  header("Location: ../login/login.php");
   exit;
 }
 
@@ -9,7 +9,7 @@ require '../function/functions.php';
 
 //jika tidak ada id di url
 if (!isset($_GET['id'])) {
-  header("Location: ../index.php");
+  header("Location: ../admin/index.php");
   exit;
 }
 

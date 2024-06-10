@@ -1,9 +1,13 @@
 <!-- Koneksi ke DB & Pilih Database -->
 <?php
+session_start();
+if (!isset($_SESSION['login'])) {
+  header("Location: ../login/login.php");
+  exit;
+}
 
 
-
-require './function/functions.php';
+require '../function/functions.php';
 
 $games = query("SELECT * FROM games");
 
@@ -87,11 +91,6 @@ if (isset($_POST['sort_option'])) {
     .sort-container button {
       border-radius: 7px;
     }
-
-    .sign,
-    .signup {
-      width: 150px;
-    }
   </style>
 </head>
 
@@ -114,10 +113,7 @@ if (isset($_POST['sort_option'])) {
         <form action="" method="POST" class="d-flex" role="search">
           <input class="form-control me-2 keyword" type="text" name="keyword" placeholder="Search" aria-label="Search" autocomplete="off">
           <button type="submit" name="cari" class="btn btn-outline-warning tombol-cari" autocomplete="off">Search</button>
-          <a href="./login/login.php" class="btn btn-outline-info ms-2 sign">Sign</a>
-          <a href="../pw2024_tubes_233040069/login/register.php" class="btn btn-outline-success ms-2 signup">Sign Up</a>
-
-
+          <a href="../login/logout.php" class="btn btn-outline-danger ms-2">Logout</a>
         </form>
       </div>
     </div>
@@ -160,14 +156,14 @@ if (isset($_POST['sort_option'])) {
             foreach ($games as $g) : ?>
               <div class="col-md-3 mb-4 d-flex align-items-stretch">
                 <div class="card" style="width: 18rem;">
-                  <img src="./assets/image/<?= $g['gambar']; ?>" class="card-img-top" alt="...">
+                  <img src="../assets/image/<?= $g['gambar']; ?>" class="card-img-top" alt="...">
                   <div class="card-body">
                     <h5 class="card-title"><?= $i++ ?>. <?= $g['nama_game']; ?></h5>
                     <p class="card-text"><?= $g['deskripsi']; ?></p>
                   </div>
 
                   <div class="card-body">
-                    <a href="detailP.php?id_game=<?= $g['id_game']; ?>" type="button" class="btn btn-outline-primary">Detail</a>
+                    <a href="Detail user.php?id=<?= $g['id_game']; ?>" type="button" class="btn btn-outline-primary">Detail</a>
                   </div>
                 </div>
               </div>
@@ -179,7 +175,7 @@ if (isset($_POST['sort_option'])) {
     </div>
   </section>
 
-  <script src="./JS/script.js"></script>
+  <script src="sjs.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 

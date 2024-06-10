@@ -104,7 +104,7 @@ $games = query("SELECT * FROM games WHERE id_game = $id");
             <li class="list-group-item"><?= $g['developer']; ?></li>
           </ul>
           <div class="card-body d-flex justify-content-between align-items-center">
-            <a href="../user.php" type="button" class="btn btn-outline-danger ms-auto">Kembali</a>
+            <a href="../user/user.php" type="button" class="btn btn-outline-danger ms-auto">Kembali</a>
           </div>
         </div>
       </div>

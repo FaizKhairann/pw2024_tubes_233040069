@@ -201,9 +201,9 @@ function login($data)
 
       // cek kondisi admin atau user
       if ($user['role'] == 'admin') {
-        header('Location: ./index.php');
+        header('Location: ../admin/index.php');
       } else {
-        header('Location: ./user.php');
+        header('Location: ../user/user.php');
       }
       exit;
     }

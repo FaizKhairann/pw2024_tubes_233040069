@@ -1,21 +1,14 @@
 <?php
-session_start();
-if (!isset($_SESSION['login'])) {
-  header("Location: ../login/login.php");
-  exit;
-}
 
-require '../function/functions.php';
+
+require './function/functions.php';
 
 // Ambil id dari url
 $id = $_GET['id_game'];
 
 // Query games berdasarkan id
 $games = query("SELECT * FROM games WHERE id_game = $id");
-
-$game = $games[0];
 ?>
-
 
 <!doctype html>
 <html lang="en">
@@ -96,7 +89,7 @@ $game = $games[0];
     foreach ($games as $g) : ?>
       <div class="col-md-4 mb-4 d-flex align-items-stretch">
         <div class="card" style="width: 32rem;">
-          <img src="../assets/image/<?= $g['gambar']; ?>" class="card-img-top" alt="...">
+          <img src="./assets/image/<?= $g['gambar']; ?>" class="card-img-top" alt="...">
           <div class="card-body">
             <h5 class="card-title"> <?= $g['nama_game']; ?></h5>
             <p class="card-text"><?= $g['deskripsi']; ?></p>
@@ -107,9 +100,7 @@ $game = $games[0];
             <li class="list-group-item"><?= $g['developer']; ?></li>
           </ul>
           <div class="card-body d-flex justify-content-between align-items-center">
-            <a href="Ubah.php?id=<?= $g['id_game']; ?>" type="button" class="btn btn-outline-warning me-2">Ubah</a>
-            <a href="Hapus.php?id=<?= $g['id_game']; ?>" type="button" class="btn btn-outline-danger ml-auto" onclick="return confirm ('apakah anda yakin?')">Hapus</a>
-            <a href="../admin/index.php" type="button" class="btn btn-outline-danger ms-auto">Kembali</a>
+            <a href="./index.php" type="button" class="btn btn-outline-danger ms-auto">Kembali</a>
           </div>
         </div>
       </div>

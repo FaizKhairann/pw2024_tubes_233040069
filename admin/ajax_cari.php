@@ -24,7 +24,7 @@ $games = cari($_GET['keyword']);
           foreach ($games as $g) : ?>
             <div class="col-md-3 mb-4 d-flex align-items-stretch">
               <div class="card" style="width: 18rem;">
-                <img src="./assets/image/<?= $g['gambar']; ?>" class="card-img-top" alt="...">
+                <img src="../assets/image/<?= $g['gambar']; ?>" class="card-img-top" alt="...">
                 <div class="card-body">
                   <h5 class="card-title"><?= $i++ ?>. <?= $g['nama_game']; ?></h5>
                   <p class="card-text"><?= $g['deskripsi']; ?></p>
